@@ -2157,8 +2157,9 @@ protected function substGetPartition
 protected
   DAE.CallAttributes attrs;
 algorithm
-  attrs := DAE.CALL_ATTR(Expression.typeof(inExp), false, true, true, false, DAE.NO_INLINE(), DAE.NO_TAIL());
-  outExp := DAE.CALL(Absyn.IDENT("$getPart"), {inExp}, attrs);
+  /*attrs := DAE.CALL_ATTR(Expression.typeof(inExp), false, true, true, false, DAE.NO_INLINE(), DAE.NO_TAIL());
+  outExp := DAE.CALL(Absyn.IDENT("$getPart"), {inExp}, attrs);*/
+  outExp := inExp;
 end substGetPartition;
 
 protected function getSubClkName
