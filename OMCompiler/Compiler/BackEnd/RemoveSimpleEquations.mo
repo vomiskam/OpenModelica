@@ -556,14 +556,6 @@ protected
   Boolean foundSimple, globalFoundSimple, warnAliasConflicts;
   Integer maxTraversals;
 algorithm
-  // Don't apply removeSimpleEquations to clocked partitions
-  if BackendDAEUtil.isClockedSyst(inSystem) then
-    outSystem := inSystem;
-    outShared := inShared;
-    outTpl := inTpl;
-    return;
-  end if;
-
   try
     BackendDAE.EQSYSTEM(orderedVars=vars, orderedEqs=eqns) := outSystem;
     ((repl, globalFoundSimple, unReplaceable, maxTraversals, warnAliasConflicts)) := inTpl;
@@ -728,13 +720,6 @@ protected
   list<BackendDAE.Equation> eqnslst;
   BackendDAE.EqSystem syst;
 algorithm
-  // Don't apply removeSimpleEquations to clocked partitions
-  if BackendDAEUtil.isClockedSyst(inSystem) then
-    outSystem := inSystem;
-    outShared := inShared;
-    outTpl := inTpl;
-    return;
-  end if;
 
   BackendDAE.EQSYSTEM(orderedVars=vars, orderedEqs=eqns) := inSystem;
   ((repl, unReplaceable, b1, warnAliasConflicts)) := inTpl;
@@ -807,13 +792,6 @@ protected
   list<BackendDAE.Equation> eqnslst;
   BackendDAE.EqSystem syst;
 algorithm
-  // Don't apply removeSimpleEquations to clocked partitions
-  if BackendDAEUtil.isClockedSyst(inSystem) then
-    outSystem := inSystem;
-    outShared := inShared;
-    outTpl := inTpl;
-    return;
-  end if;
 
   BackendDAE.EQSYSTEM(orderedVars=vars, orderedEqs=eqns, matching=BackendDAE.MATCHING(comps=comps)) := inSystem;
   ((repl, unReplaceable, b1, warnAliasConflicts)) := inTpl;
