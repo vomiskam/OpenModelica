@@ -915,16 +915,23 @@ protected
 algorithm
   for i in 1:arrayLength(basePartitions) loop
     basePartition := basePartitions[i];
+    simSubPartitions := {};
     if basePartition.nSubClocks > 0 then
-      simSubPartitions := List.map(Array.getRange(off, off + basePartition.nSubClocks - 1, subPartitions), Util.getOption);
-      simSubPartitions := listReverse(simSubPartitions);
-    else
-      simSubPartitions := {};
+      for j in off:off + basePartition.nSubClocks - 1 loop
+        simSubPartitions := match subPartitions[j]
+          local
+            SimCode.SubPartition simSubPartition;
+          case SOME(simSubPartition)
+            then simSubPartition::simSubPartitions;
+          else
+            simSubPartitions;
+        end match;
+      end for;
     end if;
     off := off + basePartition.nSubClocks;
     clockedPartitions := SimCode.CLOCKED_PARTITION(basePartition.clock, simSubPartitions)::clockedPartitions;
   end for;
-    clockedPartitions := listReverse(clockedPartitions); // in order to keep the correct indexes for the correct clkfire-calls
+  clockedPartitions := listReverse(clockedPartitions); // in order to keep the correct indexes for the correct clkfire-calls
 end createClockedSimPartitions;
 
 protected function collectClockedVars "author: rfranke
