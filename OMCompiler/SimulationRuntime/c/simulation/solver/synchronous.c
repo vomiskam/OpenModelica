@@ -57,7 +57,8 @@ void initSynchronous(DATA* data, threadData_t *threadData, modelica_real startTi
   }
 
   for(i=0; i<data->modelData->nSubClocks; i++) {
-    assertStreamPrint(NULL, NULL != data->modelData->subClocksInfo[i].solverMethod, "Continuous clocked systems aren't supported yet");
+    const char* method = data->modelData->subClocksInfo[i].solverMethod;
+    assertStreamPrint(NULL, NULL == method || strlen(method) == 0, "Continuous clocked systems aren't supported yet");
   }
 
   TRACE_POP
